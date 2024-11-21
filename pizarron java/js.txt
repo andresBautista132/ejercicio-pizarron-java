@@ -1,0 +1,38 @@
+document.getElementById('addTaskButton').addEventListener('click', addTask);
+
+function addTask() {
+    const taskName = document.getElementById('taskName').value.trim();
+    const taskImportance = document.getElementById('taskImportance').value;
+
+    if (taskName === '') {
+        alert('Por favor, ingresa un nombre para la tarea.');
+        return;
+    }
+
+    const taskList = document.getElementById('taskList');
+    const taskItem = document.createElement('li');
+    taskItem.className = `task ${taskImportance}`;
+    taskItem.innerHTML = `
+        <span>${taskName}</span>
+        <div class="task-actions">
+            <button class="complete-btn">Completar</button>
+            <button class="delete-btn">Eliminar</button>
+        </div>
+    `;
+
+    taskList.appendChild(taskItem);
+
+    
+    document.getElementById('taskName').value = '';
+
+    
+    const completeButton = taskItem.querySelector('.complete-btn');
+    completeButton.addEventListener('click', () => {
+        taskItem.classList.toggle('completed');
+    });
+
+    const deleteButton = taskItem.querySelector('.delete-btn');
+    deleteButton.addEventListener('click', () => {
+        taskList.removeChild(taskItem);
+    });
+}
